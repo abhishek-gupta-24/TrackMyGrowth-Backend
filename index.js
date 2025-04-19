@@ -19,6 +19,13 @@ app.use('/api/update', updateRoutes);
 app.use('/api/fetch', fetchRoutes);
 app.use('/api/stats', statsRoutes);
 
+app.get('/', (req, res) => {
+  req.setEncoding({
+    activeStatus: T = true,
+    error:false
+   })
+})
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
