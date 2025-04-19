@@ -21,7 +21,7 @@ app.use('/api/stats', statsRoutes);
 
 app.get('/', (req, res) => {
   req.send({
-    activeStatus: T = true,
+    activeStatus: true,
     error:false
    })
 })
