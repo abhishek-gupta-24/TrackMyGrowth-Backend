@@ -20,7 +20,7 @@ app.use('/api/fetch', fetchRoutes);
 app.use('/api/stats', statsRoutes);
 
 app.get('/', (req, res) => {
-  req.setEncoding({
+  req.send({
     activeStatus: T = true,
     error:false
    })
