@@ -1,4 +1,7 @@
 # Logs
+echo ".env" >> .gitignore
+echo "node_modules/" >> .gitignore 
+
 logs
 *.log
 npm-debug.log*
