@@ -20,7 +20,7 @@ app.use('/api/fetch', fetchRoutes);
 app.use('/api/stats', statsRoutes);
 
 app.get('/', (req, res) => {
-  req.send({
+  res.send({
     activeStatus: true,
     error:false
    })
