@@ -18,6 +18,8 @@ app.use(cors({
   origin: 'https://track-my-growth-frontend.vercel.app',
   credentials: true
 }));
+app.options('*', cors()); 
+
 
 app.use(express.json());
 
