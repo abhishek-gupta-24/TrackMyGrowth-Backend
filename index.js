@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use(cors({
-  origin: 'https://track-my-growth-frontend.vercel.app/',
+  origin: 'https://track-my-growth-frontend.vercel.app',
   credentials: true
 }));
 
