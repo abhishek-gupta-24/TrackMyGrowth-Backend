@@ -422,6 +422,7 @@ export const getLeetcodeRating = async (req, res) => {
         contestRating = history
           .filter(contest => contest.attended === true)
           .map(contest => contest.rating);
+        console.log(contestRating);
 
       } catch (err) {
         return res.status(500).json({ error: 'Failed to fetch Leetcode Rating' });
