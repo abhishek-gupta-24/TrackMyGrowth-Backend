@@ -383,7 +383,7 @@ export const getatcoderInfo = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch GFG stats' });
   }
 };
-export const getLeetcodeRating= async (req, res) => {
+export const getLeetcodeRating = async (req, res) => {
   try {
     const { email } = req.params;
 
@@ -392,36 +392,54 @@ export const getLeetcodeRating= async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
+
     const usernames = {
       leetcode: user.platforms?.leetcode || '',
     };
-    let rating = 0
-    let maxRating = 0
-    let contestRating=[]
+
+    let rating = 0;
+    let maxRating = 0;
+    let contestRating = [];
+
     if (usernames.leetcode) {
       try {
-        const response = await axios.get(`https://alfa-leetcode-api.onrender.com/${usernames.leetcode}/contest`);
-        rating = response.data.contestRating;
-        response.data.contestParticipation.forEach((contest) => maxRating = Math.max(maxRating, contest.rating))
-        contestRating=response.data.contestParticipation
+        const response = await axios.get(`https://leetcode-api-pied.vercel.app/user/${usernames.leetcode}/contests`);
+        
+        rating = response.data.userContestRanking.rating;
+
+        // Calculate maxRating from attended contests
+        response.data.userContestRankingHistory.forEach((contest) => {
+          if (contest.attended) {
+            maxRating = Math.max(maxRating, contest.rating);
+          }
+        });
+
+        // Assign attended ratings to contestRating
+        const history = response.data.userContestRankingHistory;
+        contestRating = history
+          .filter(contest => contest.attended === true)
+          .map(contest => contest.rating);
+
       } catch (err) {
         return res.status(500).json({ error: 'Failed to fetch Leetcode Rating' });
       }
     }
+
     res.json({
       rating,
       maxRating,
-      contestRating
+      contestRating,
     });
+
   } catch (err) {
     console.error('Platform Stats Error:', err.message);
     res.status(500).json({ error: 'Failed to fetch Leetcode rating' });
   }
 };
+
 export const getCodeforcesRating= async (req, res) => {
   try {
     const { email } = req.params;
